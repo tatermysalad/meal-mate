@@ -17,7 +17,7 @@ export default class HomePage extends React.Component {
 
     updateState = (stateKeyId, newStateValue) => {
         if (Object.values(this.state.listToShow).includes(newStateValue)) {
-            console.log(`Almost created a duplicate item`);
+            alert(`${newStateValue} already exists`);
         } else {
             this.setState({
                 listToShow: [...this.state.listToShow, newStateValue],
@@ -36,7 +36,7 @@ export default class HomePage extends React.Component {
                     <div className="PantryList">
                         <div>
                             <PantryListForm setParentState={this.updateState} />
-                        <button onClick={this.handleButtonClick}>Fetch recipes</button>
+                            <button onClick={this.handleButtonClick}>Fetch recipes</button>
                         </div>
                         <div id="pantryListDisplay">
                             <PantryListDisplay listToShow={this.state.listToShow} />
