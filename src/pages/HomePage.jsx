@@ -28,6 +28,12 @@ export default class HomePage extends React.Component {
         const recipes = await RecipeSearch(this.state.listToShow, this.state.apiKey);
         this.setState({ recipes });
     };
+
+    handleItemRemove = (itemToRemove) => {
+        const updatedList = this.state.listToShow.filter((item, index) => item !== itemToRemove);
+
+        this.setState({listToShow: updatedList})
+    }
     render() {
         return (
             <div>
@@ -39,7 +45,7 @@ export default class HomePage extends React.Component {
                             <button onClick={this.handleButtonClick}>Fetch recipes</button>
                         </div>
                         <div id="pantryListDisplay">
-                            <PantryListDisplay listToShow={this.state.listToShow} />
+                            <PantryListDisplay listToShow={this.state.listToShow} onItemRemove={this.handleItemRemove} />
                         </div>
                     </div>
                     <div className="RecipeDisplay">
