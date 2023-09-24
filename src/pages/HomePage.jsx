@@ -30,23 +30,23 @@ export default class HomePage extends React.Component {
     };
 
     handleItemRemove = (itemToRemove) => {
-        const updatedList = this.state.listToShow.filter((item, index) => item !== itemToRemove);
+        const updatedList = this.state.listToShow.filter((item) => item !== itemToRemove);
 
         this.setState({listToShow: updatedList})
     }
     render() {
         return (
             <div>
-                <h1>Meal Mate</h1>
+                <img src="/src/img/meal_mate.png" alt="Meal Mate Logo" id="logo"/>
                 <div className="mainSection">
                     <div className="PantryList">
                         <div>
                             <PantryListForm setParentState={this.updateState} />
-                            <button onClick={this.handleButtonClick}>Fetch recipes</button>
                         </div>
                         <div id="pantryListDisplay">
                             <PantryListDisplay listToShow={this.state.listToShow} onItemRemove={this.handleItemRemove} />
                         </div>
+                            <button onClick={this.handleButtonClick}>Fetch recipes</button> 
                     </div>
                     <div className="RecipeDisplay">
                         <RecipeDisplay listToShow={this.state.listToShow} api={this.state.apiKey} recipes={this.state.recipes} />

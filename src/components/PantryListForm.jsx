@@ -22,7 +22,7 @@ export default class PantryListForm extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 {/* htmlFor instead of for, for the compiler */}
-                <label htmlFor="item">Item here:</label>
+                <label htmlFor="item">Add item: </label>
                 <input type="text" name="item" id="itemInput" placeholder="Enter item" value={this.state.newItem} onChange={this.handleChangeInput} />
                 <button type="submit">Add</button>
             </form>

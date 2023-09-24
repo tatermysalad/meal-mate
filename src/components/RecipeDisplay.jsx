@@ -15,7 +15,8 @@ export default class RecipeDisplay extends React.Component {
                             <h2>{recipe.title}</h2>
                         </a>
                         <img src={recipe.image} alt={recipe.title}></img>
-                        <br></br>
+                        <p>Used Ingredients: {recipe.usedIngredientCount}</p>
+                        <p>Needed Ingredients: {recipe.missedIngredientCount}</p>
                     </li>
                 );
             });
