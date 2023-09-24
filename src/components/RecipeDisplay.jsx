@@ -21,8 +21,6 @@ export default class RecipeDisplay extends React.Component {
                 );
             });
             return <ul>{recipesToShow}</ul>;
-        } else {
-            return <div>Loading....</div>;
         }
     }
 }

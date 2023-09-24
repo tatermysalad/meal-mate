@@ -7,7 +7,7 @@ export default function PantryListDisplay(props) {
 
     return (
         <div>
-            <h4>Pantry List</h4>
+            <h3>Pantry List</h3>
             <ul>{listOfItems}</ul>
         </div>
     );

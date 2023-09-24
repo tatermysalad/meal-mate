@@ -25,6 +25,7 @@ export default class PantryListForm extends React.Component {
                 <label htmlFor="item">Add item: </label>
                 <input type="text" name="item" id="itemInput" placeholder="Enter item" value={this.state.newItem} onChange={this.handleChangeInput} />
                 <button type="submit">Add</button>
+                <h6>Click an item to remove it from the list</h6>
             </form>
         );
     }
