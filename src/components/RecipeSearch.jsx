@@ -1,6 +1,7 @@
 import { apiTestResult } from "./TestingData";
 
 export async function RecipeSearch(ingredients, api) {
+    console.log(process.env.API_KEY);
     let ingredientsString = ingredients.toString();
     let recipes = await fetch(
         `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${api}&ingredients=${ingredientsString}&ranking=2&number=5`
