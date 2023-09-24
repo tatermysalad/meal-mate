@@ -16,9 +16,13 @@ export default class HomePage extends React.Component {
     }
 
     updateState = (stateKeyId, newStateValue) => {
-        this.setState({
-            listToShow: [...this.state.listToShow, newStateValue],
-        });
+        if (Object.values(this.state.listToShow).includes(newStateValue)) {
+            console.log(`Almost created a duplicate item`);
+        } else {
+            this.setState({
+                listToShow: [...this.state.listToShow, newStateValue],
+            });
+        }
     };
     handleButtonClick = async () => {
         const recipes = await RecipeSearch(this.state.listToShow, this.state.apiKey);
@@ -32,13 +36,13 @@ export default class HomePage extends React.Component {
                     <div className="PantryList">
                         <div>
                             <PantryListForm setParentState={this.updateState} />
+                        <button onClick={this.handleButtonClick}>Fetch recipes</button>
                         </div>
                         <div id="pantryListDisplay">
                             <PantryListDisplay listToShow={this.state.listToShow} />
                         </div>
                     </div>
                     <div className="RecipeDisplay">
-                        <button onClick={this.handleButtonClick}>Fetch recipes</button>
                         <RecipeDisplay listToShow={this.state.listToShow} api={this.state.apiKey} recipes={this.state.recipes} />
                     </div>
                 </div>
