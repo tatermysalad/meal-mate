@@ -3,6 +3,7 @@ import PantryListDisplay from "../components/PantryListDisplay";
 import PantryListForm from "../components/PantryListForm";
 import RecipeDisplay from "../components/RecipeDisplay";
 import { RecipeSearch } from "../components/RecipeSearch";
+import logo from "../img/meal_mate.png"
 
 export default class HomePage extends React.Component {
     constructor(props) {
@@ -37,7 +38,7 @@ export default class HomePage extends React.Component {
     render() {
         return (
             <div>
-                <img src="src/img/meal_mate.png" alt="Meal Mate Logo" id="logo" />
+                <img src={logo} alt="Meal Mate Logo" id="logo" />
                 <div className="mainSection">
                     <div className="PantryList">
                         <div>
