@@ -1,59 +1,47 @@
-import React from "react";
+import { useEffect, useContext } from "react";
 import PantryListDisplay from "../components/PantryListDisplay";
 import PantryListForm from "../components/PantryListForm";
 import RecipeDisplay from "../components/RecipeDisplay";
 import { RecipeSearch } from "../components/RecipeSearch";
-import logo from "../img/meal_mate.png"
+import logo from "../img/meal_mate.png";
+import RecipeProvider, {RecipeContext} from "../context/RecipeContext";
+import { useLocalStorage } from "react-use";
 
-export default class HomePage extends React.Component {
-    constructor(props) {
-        super(props);
+export default function HomePage() {
+    const {
+        recipes,
+        setRecipes,
+        listToShow,
+        setListToShow,
+        newListValue,
+        setNewListValue
+    } = useContext(RecipeContext);
 
-        this.state = {
-            listToShow: ["tomato", "onion", "bread"],
-            apiKey: "3e06d892f3044bab8b766176ccd0e18c",
-            recipes: [],
-        };
-    }
+    const [listItems, setStoredListItems] = useLocalStorage("list", listToShow);
 
-    updateState = (stateKeyId, newStateValue) => {
-        if (Object.values(this.state.listToShow).includes(newStateValue)) {
-            alert(`${newStateValue} already exists`);
-        } else {
-            this.setState({
-                listToShow: [...this.state.listToShow, newStateValue],
-            });
-        }
-    };
-    handleButtonClick = async () => {
-        const recipes = await RecipeSearch(this.state.listToShow, this.state.apiKey);
-        this.setState({ recipes });
+
+    let handleButtonClick = async () => {
+        const recipes = await RecipeSearch(listItems);
+        setRecipes({ recipes });
     };
 
-    handleItemRemove = (itemToRemove) => {
-        const updatedList = this.state.listToShow.filter((item) => item !== itemToRemove);
-
-        this.setState({listToShow: updatedList})
-    }
-    render() {
-        return (
-            <div>
-                <img src={logo} alt="Meal Mate Logo" id="logo" />
-                <div className="mainSection">
-                    <div className="PantryList">
-                        <div>
-                            <PantryListForm setParentState={this.updateState} />
-                        </div>
-                        <div id="pantryListDisplay">
-                            <PantryListDisplay listToShow={this.state.listToShow} onItemRemove={this.handleItemRemove} />
-                        </div>
-                        <button onClick={this.handleButtonClick}>Fetch recipes</button>
+    return (
+        <div>
+            <img src={logo} alt="Meal Mate Logo" id="logo" />
+            <div className="mainSection">
+                <div className="PantryList">
+                    <div>
+                        <PantryListForm />
                     </div>
-                    <div className="RecipeDisplay">
-                        <RecipeDisplay listToShow={this.state.listToShow} api={this.state.apiKey} recipes={this.state.recipes} />
+                    <div id="pantryListDisplay">
+                        {/* <PantryListDisplay /> */}
                     </div>
+                    <button onClick={() => handleButtonClick()}>Fetch recipes</button>
+                </div>
+                <div className="RecipeDisplay">
+                    {/* <RecipeDisplay /> */}
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
