@@ -1,27 +1,32 @@
-import { defaultRecipeContext } from "../context/RecipeContext";
-import {useLocalStorage} from "react-use";
+import { useEffect, useState } from "react";
+import { useLocalStorage } from "react-use";
 
 export default function PantryListDisplay() {
-    const [storedList, setStoredList] = useLocalStorage("list", defaultRecipeContext.listToShow)
+    const [localStorageList, setLocalStorageList] = useLocalStorage("list", []);
+
+    useEffect(() => {
+        console.log("Component rendered");
+    }, [localStorageList]);
 
     let handleItemRemove = (value) => {
-        if (storedList.includes(value)) {
-            alert(`${value} already exists`);
-        } else {
-            setStoredList([...storedList, value]);
-        }
+        const updatedList = localStorageList.filter((item) => item !== value);
+        setLocalStorageList(updatedList);
     };
-
-    let listOfItems = storedList.map((value, index) => (
-        <li key={index} onClick={() => handleItemRemove(value)}>
-            {value}
-        </li>
-    ));
 
     return (
         <div>
             <h3>Pantry List</h3>
-            <ul>{listOfItems}</ul>
+            {Array.isArray(localStorageList) && localStorageList.length > 0 ? (
+                <ul>
+                    {localStorageList.map((item) => (
+                        <li key={item} onClick={() => handleItemRemove(item)}>
+                            {item}
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No items in the pantry list.</p>
+            )}
         </div>
     );
 }

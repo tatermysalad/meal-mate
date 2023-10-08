@@ -1,33 +1,30 @@
 import { useLocalStorage } from "react-use";
-import { useEffect, useState } from "react";
-import { defaultRecipeContext } from "../context/RecipeContext";
-
+import { useContext, useState } from "react";
+import { RecipeContext } from "../context/RecipeContext";
 
 export default function PantryListForm() {
-    const [storedList, setStoredList] = useLocalStorage("list", defaultRecipeContext.listToShow);
+    const [ storedList, setStoredList ] = useLocalStorage("list")
     var [newItem, setNewItem] = useState("");
-    let handleSubmit = (event) => {
-        event.preventDefault()
+
+    const handleClick = (event) => {
+        event.preventDefault();
+        console.log(newItem);
         if (storedList.includes(newItem)) {
             alert(`${newItem} already exists`);
-        } else {
+        } else if (newItem != "") {
             setStoredList([...storedList, newItem]);
+            // setList([...list, newItem]);
+            setNewItem("");
         }
-        setNewItem("");
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }
+    };
 
     return (
-        <form
-            onSubmit={() => {
-                setNewItem(newItem);
-                handleSubmit();
-            }}
-        >
-            {/* htmlFor instead of for, for the compiler */}
+        <form >
             <label htmlFor="item">Add item: </label>
-            <input type="text" name="item" id="itemInput" placeholder="Enter item" value={newItem} onChange={() => setNewItem(newItem)} />
-            <button type="submit">Add</button>
+            <input type="text" name="item" id="itemInput" value={newItem} onChange={(event) => setNewItem(event.target.value)} />
+            <button type="submit" onClick={handleClick}>
+                Add
+            </button>
             <h6>Click an item to remove it from the list</h6>
         </form>
     );

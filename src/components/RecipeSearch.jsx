@@ -12,7 +12,7 @@ export async function RecipeSearch() {
     //     `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${apiKey}&ingredients=${ingredientsString}&ranking=2&number=5`
     // ).catch((error) => {
     //     throw new Error("API failure.");
-    // });
+    // })
     // if (recipes.status === 404) {
     //     throw new Error("API did not have data for the requested ID.");
     // }

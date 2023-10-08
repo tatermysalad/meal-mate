@@ -1,20 +1,32 @@
 import { createContext, useState } from "react";
+import { useLocalStorageState } from "../hooks/LocalStorage";
 
 export var defaultRecipeContext = {
     listToShow: [],
-    setListToShow: () => { },
     newListValue: "",
-    setNewListValue: () => { },
     recipes: [],
-    setRecipes: () => { }
 };
 
-export let RecipeContext = createContext(defaultRecipeContext);
+export let RecipeContext = createContext(null);
 
-export default function RecipeProvider(props) {
-    const [recipeContextData, setRecipeContextData] = useState(defaultRecipeContext);
-    
-    return (<RecipeContext.Provider value={{ recipeContextData }}>
-        {props.children}
-    </RecipeContext.Provider>)
+// eslint-disable-next-line react/prop-types
+export default function RecipeProvider({ children }) {
+    const [listToShow, setListToShow] = useLocalStorageState("list", defaultRecipeContext.listToShow)
+    const [newListValue, setNewListValue] = useState(defaultRecipeContext.newListValue);
+    const [recipes, setRecipes] = useState(defaultRecipeContext.recipes);
+
+    return (
+        <RecipeContext.Provider
+            value={{
+                list: listToShow,
+                setList: setListToShow,
+                newValue: newListValue,
+                setNewValue: setNewListValue,
+                recipes: recipes,
+                setRecipes: setRecipes,
+            }}
+        >
+            {children}
+        </RecipeContext.Provider>
+    );
 }
